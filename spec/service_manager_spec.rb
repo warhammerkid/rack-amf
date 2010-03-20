@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper.rb'
-require 'rack/amf'
+require File.dirname(__FILE__) + '/spec_helper.rb'
 require 'rack/amf/middleware/service_manager'
 
 describe Rack::AMF::Middleware::ServiceManager do

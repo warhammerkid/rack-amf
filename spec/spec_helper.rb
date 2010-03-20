@@ -8,27 +8,4 @@ end
 require 'spec/autorun'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'amf'
-
-def request_fixture(binary_path)
-  File.open(File.dirname(__FILE__) + '/fixtures/request/' + binary_path).read
-end
-
-def object_fixture(binary_path)
-  File.open(File.dirname(__FILE__) + '/fixtures/objects/' + binary_path).read
-end
-
-def create_rack_request(binary_path)
-  require 'rack/amf/request'
-  env = {'rack.input' => StringIO.new(request_fixture(binary_path))}
-  Rack::AMF::Request.new(env)
-end
-
-# Add reset support to ClassMapping
-module AMF
-  class ClassMapping
-    def reset
-      @mappings = nil
-    end
-  end
-end
+require 'rack/amf'
