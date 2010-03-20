@@ -14,7 +14,8 @@ module Rack::AMF
       return @app.call(env) unless should_handle?(env)
 
       # Wrap request and response
-      env['rack-amf.request'] = Request.new(env)
+      env['rack.input'].rewind
+      env['rack-amf.request'] = Request.new.populate_from_stream(env['rack.input'].read)
       env['rack-amf.response'] = Response.new(env['rack-amf.request'])
 
       # Call handle on "inheriting" class

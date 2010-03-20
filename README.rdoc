@@ -1,6 +1,8 @@
 == DESCRIPTION:
 
-A full featured AMF gateway implemented as a Rack middleware. Includes fully compliant AMF0/AMF3 serializers and deserializers and a Rack middleware that includes a service handler and the ability to easily handle requests yourself if you don't want to use the service handler.
+A full featured AMF gateway implemented as a Rack middleware. Includes a service
+handler mode that simplifies service mappings, as well as a mode that simply
+processes requests and lets you handle the response how you want.
 
 == INSTALL:
 
@@ -12,28 +14,35 @@ config.ru:
 
   require 'rack/amf'
   use Rack::AMF
-  
+
+  class User
+    attr_accessor :username
+  end
+
   class TestService
     def sayHello
       'Hello'
     end
+
+    def getUser
+      u = User.new
+      u.username = "user"
+      u
+    end
   end
   
   Rack::AMF::Environment.register_service 'TestService', TestService.new
+  RocketAMF::ClassMapper.define do |m|
+    m.map :as => 'User', :ruby => 'User'
+  end
   
   run lambda {|env| [200, { 'Content-Type' => 'text/plain', 'Content-Length' => '16' }, ["Rack AMF gateway"] ] }
-
-== TODO:
-
-* Write some Rails helpers so that using Rack AMF as a Rails Metal is easy.
-  * Support ActiveRecord serialization/deserialization
-  * Auto-map to Rails controllers
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 Tony Hillerson based on work by Aaron Smith
+Copyright (c) 2010 Stephen Augenstein
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
