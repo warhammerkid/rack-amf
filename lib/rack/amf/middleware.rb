@@ -1,6 +1,3 @@
-require 'rack/amf/request'
-require 'rack/amf/response'
-
 module Rack::AMF
   # Provide some helper items that can be included in the various middleware
   # being offered.
@@ -15,8 +12,8 @@ module Rack::AMF
 
       # Wrap request and response
       env['rack.input'].rewind
-      env['rack-amf.request'] = Request.new.populate_from_stream(env['rack.input'].read)
-      env['rack-amf.response'] = Response.new(env['rack-amf.request'])
+      env['rack-amf.request'] = RocketAMF::Envelope.new.populate_from_stream(env['rack.input'].read)
+      env['rack-amf.response'] = RocketAMF::Envelope.new
 
       # Call handle on "inheriting" class
       handle env

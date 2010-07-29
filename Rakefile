@@ -18,7 +18,7 @@ spec = Gem::Specification.new do |s|
   s.files        = FileList['README.rdoc', 'Rakefile', 'lib/**/*.rb', 'spec/**/*.{rb,opts}']
   s.test_files   = Dir[*['spec/**/*_spec.rb']]
 
-  s.add_dependency('RocketAMF')
+  s.add_dependency 'RocketAMF', '>= 0.2.0'
 end
 
 desc 'Default: Run the specs'

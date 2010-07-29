@@ -47,15 +47,3 @@ module Rack::AMF
     end
   end
 end
-
-# For compatibility
-module AMF #:nodoc:
-  def self.const_missing const
-    if const == :ClassMapper
-      $stderr.puts("DEPRECATION WARNING: Please use RocketAMF::ClassMapper instead of AMF::ClassMapper")
-      AMF.const_set(:ClassMapper, RocketAMF::ClassMapper)
-    else
-      super(const)
-    end
-  end
-end
