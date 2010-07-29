@@ -6,7 +6,7 @@ require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name     = 'rack-amf'
-  s.version  = '1.0.0'
+  s.version  = '2.0.0'
   s.summary  = 'AMF gateway packaged as a rack middleware'
   s.authors  = ['Stephen Augenstein']
   s.email    = 'perl.programmer@gmail.com'
@@ -36,4 +36,11 @@ end
 
 Spec::Rake::SpecTask.new do |t|
   t.spec_opts = ['--options', 'spec/spec.opts']
+end
+
+desc 'Generate a gemspec file'
+task :gemspec do
+  File.open("#{spec.name}.gemspec", 'w') do |f|
+    f.write spec.to_ruby
+  end
 end
